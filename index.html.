@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: black; color: #f7931a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
+        #price { font-size: 60px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="price">Загрузка...</div>
+    <script>
+        async function getPrice() {
+            try {
+                const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+                const data = await res.json();
+                document.getElementById('price').innerText = '$' + Math.round(data.price).toLocaleString();
+            } catch (e) { document.getElementById('price').innerText = 'Ошибка'; }
+        }
+        setInterval(getPrice, 3000);
+        getPrice();
+    </script>
+</body>
+</html>
